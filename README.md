@@ -4,7 +4,7 @@
     <img src="https://raw.githubusercontent.com/bluesky-dev12/PFDataCompiler/main/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">NFSABK_Tool compiler for NFS Carbon</h3>
+  <h3 align="center">NFS ABK Tool for NFS Carbon</h3>
 
   <p align="center">
     This tools helps you convert sounds for your NFS Carbon.
@@ -29,4 +29,4 @@
 ## RoadMap
 
 * []() Extract abk. - Done.
-* []() Compile abk well. - Done.
+* []() Compile abk well.
