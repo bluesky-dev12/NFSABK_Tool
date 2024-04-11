@@ -57,6 +57,14 @@ namespace ABK_Extract
                 long headerPosition = FindPattern(reader, headerBytes);
                 if (headerPosition != -1)
                 {
+                    // Save the data before the BNK header into a separate file
+                    string beforeBNKFileName = Path.GetFileNameWithoutExtension(abkFilePath) + "_beforeBNK" + ".aems";
+                    byte[] beforeBNKData = new byte[headerPosition];
+                    reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                    reader.Read(beforeBNKData, 0, (int)headerPosition);
+                    File.WriteAllBytes(beforeBNKFileName, beforeBNKData);
+                    Console.WriteLine($"Data before BNK header saved to: {beforeBNKFileName}");
+
                     // Seek to BNK header position
                     reader.BaseStream.Seek(headerPosition, SeekOrigin.Begin);
 
@@ -71,7 +79,6 @@ namespace ABK_Extract
                     // Write BNK data to a file
                     string bnkFileName = Path.GetFileNameWithoutExtension(abkFilePath) + BNK_FILE_EXTENSION;
                     File.WriteAllBytes(bnkFileName, bnkData);
-
                     Console.WriteLine($"BNK file extracted: {bnkFileName}");
 
                     // Execute sx.exe command
@@ -85,10 +92,6 @@ namespace ABK_Extract
                     // Move and rename the generated wav files
                     short bnkNumElements = GetBNKNumElements(bnkFileName);
                     RenameAndMoveWavFiles(outPath, filenameBase, bnkNumElements);
-
-                    // Remove the BNK file
-                    File.Delete(bnkFileName);
-                    Console.WriteLine($"BNK file deleted: {bnkFileName}");
                 }
                 else
                 {
